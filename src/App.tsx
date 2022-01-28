@@ -1,26 +1,47 @@
-import React from 'react';
+import React, { useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Note from './components/Note';
+import AddToNotes from './components/AddToNotes';
+
+export interface INote {
+  notes: {
+    title: string;
+    content: string;
+    type: string;
+  }[]
+}
 
 function App() {
+
+  const [notes, setNotes] = useState<INote["notes"]>([
+
+    {
+      title: "First Note",
+      content: "This is the first note",
+      type: "text"
+    }
+  ]) 
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>My Pocket Notes</h1>
+      <Note notes={notes}/>
+
+      <AddToNotes setNotes={setNotes} notes={notes}></AddToNotes>
     </div>
   );
+
+  function calculateDaysBetweenDates(date1:Date, date2:Date) {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    const firstDate = new Date(date1);
+    const secondDate = new Date(date2);
+
+    return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+  }
 }
 
 export default App;
+
